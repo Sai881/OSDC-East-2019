@@ -1,0 +1,788 @@
+Hierarchical and mixed-effect models in R
+========================================================
+author: Richard Erickson
+date: 1 May 2019
+autosize: true
+css: css/style.css
+font-import: http://fonts.googleapis.com/css?family=Open+Sans
+font-family: 'Open Sans'
+transition: none
+   
+<span class="footer">
+U.S. Department of the Interior<br>
+U.S. Geological Survey 
+</span>
+
+About me
+========================================================
+title: true
+incremental: true
+
+- Research Quantitative Ecologist 
+- Develop models to guide invasive species control
+- *UseR* since 2007
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Outcome
+========================================================
+title: true
+incremental: true
+
+- Understand basics of mixed-effect models
+- Know how to use lme4's `lmer()` and `glmer()` functions
+- Awareness of advanced methods
+
+Outline
+========================================================
+title: true
+incremental: true
+
+- Intro (5 minutes)
+- Why do we need hierarchical or mixed-effect models? (5 minutes)
+- Refresher on linear models (20 minutes)
+- What are hierarchical or mixed-effect? (30 minutes)
+- Linear mixed-effect models with `lme4` (60 minutes)
+- Generalized mixed-effect models with `lme4` (60 minutes)
+- Beyond simple models: Where to go from here? (30 minutes)
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Why do we need hierarchical models?
+========================================================
+title: true
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+pseudo-replication
+========================================================
+title: true
+
+![Lab example of pseudo-replication](./images/sampler_lab.jpg)
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Nested data
+========================================================
+title: true
+
+![Example of school hierarchy](./images/Schools.jpeg)
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+
+
+Repeated measures
+========================================================
+title: true
+
+```{r, out.width = "400px", echo = FALSE}
+knitr::include_graphics("./images/Repeated.jpeg")
+```
+
+```{r repeatedExample, echo = FALSE, eval = FALSE}
+## I cannot figure out how to get diagrammer to work with Rpres so 
+## I manually save the figure pdf and then include in manually.
+library(DiagrammeR)
+library(tidyverse)
+library(DiagrammeRsvg)
+library(rsvg)
+
+graph <- grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  A[label = Weight, shape = box, fontname = Helvetica]
+  B1[label = Time_1, shape = box, fontname = Helvetica]
+  B2[label = Time_2, shape = box, fontname = Helvetica]
+  B3[label = Time_3, shape = box, fontname = Helvetica]
+  # several 'edge' statements
+
+  A -> B1
+  A -> B2
+  A -> B3
+#  C->A[dir = both]
+}
+")
+print(graph)
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Linear models: Workhorse of R
+========================================================
+title: true
+
+```{r, out.width = "600px", echo = FALSE}
+knitr::include_graphics("./images/workhorse.jpg")
+``` 
+
+
+Image source: Library of Congress
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Simple linear model
+========================================================
+title: true
+incremental: true
+
+- $y = ax + b$
+- $y = a + b x$
+- $y = m x + b$
+- $y_i \sim \beta_0 + \beta_1 x_i + \epsilon_i$
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+lm() in R
+========================================================
+title: true
+incremental: true
+
+- `lm()`
+- `forumla = `
+- `data = `
+- `lm(formulay ~ x, data = dat)`
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Multiple regression
+========================================================
+title: true
+incremental: true
+
+- $y ~ x_1 \beta_1 +  x_2 \beta_2 + \epsilon$
+- `lm(y ~ x2 + x2, data = dat)`
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Dummy variables
+========================================================
+title: true
+incremental: true
+
+- Continuous (*slope*): 
+  - The vector of raw data
+  - `x1` = c(``r rnorm(4)``)
+- Discrete (*intercept*):
+  - `0`s and `1`s to code for membership in a group
+  - `x2` = c(``r rbinom(4, 1, 0.5)``)
+  
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+formula syntax
+========================================================
+title: true
+incremental: true
+
+
+- `formula = y ~ 1 + x1` (or shorthand `formula = y ~ x1`)
+- `formula = y ~ x1 - 1`
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Red fish, blue fish
+========================================================
+title: true
+
+```{r redFish}
+df = data.frame(length = c(1, 2, 3), 
+                fish = c("red", "blue", "red"))
+print(df)
+```         
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Red fish vs. blue fish
+========================================================
+title: true
+
+```{r redFish1}
+model.matrix( ~ length + fish, data = df)
+```         
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Red fish and blue fish
+========================================================
+title: true
+
+```{r redFish2}
+model.matrix( ~ length + fish - 1, data = df)
+```         
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Red fish, blue fish data
+========================================================
+title: true
+
+
+```{r simData_fish, echo = FALSE}
+library(tidyverse)
+set.seed(1234)
+fishes <- tibble(length = c(rnorm(10, 10), rnorm(10, 5)),
+                 fish = rep(c("red", "blue"), each = 10))
+```
+
+```{r data, out.width = "600px", out.height = "400px", echo = TRUE}
+glimpse(fishes)
+fish_means <- fishes %>% group_by(fish) %>% summarize(mean(length))
+fish_means
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Red fish, blue fish summary
+========================================================
+title: true
+
+
+
+```{r data_summary, out.width = "600px", out.height = "400px", echo = TRUE}
+fish_summary <- fishes %>% group_by(fish) %>% summarize(mean(length))
+fish_summary
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Red fish, blue lm
+========================================================
+title: true
+
+
+
+```{r fish_lm, out.width = "600px", out.height = "400px", echo = TRUE}
+fish_lm <- lm(length ~ fish - 1, data = fishes)
+coef(fish_lm)
+print(fish_summary)
+```
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+What if nested observations?
+========================================================
+title: true
+incremental: true
+
+- Collapse
+  - Use means by group
+  - Lose variability, observations
+- Ignore 
+  - Treat all individuals as independent
+  - Too many observations ("pseudo-replication")
+- Model it! 
+  
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Linear mixed-effect models
+========================================================
+title: true
+incremental: true
+
+- Assume hiearcy of data 
+- Shared mean of means
+- Example: $y_i \sim \beta_0 + \beta_1 x_i + \epsilon_{i} + \delta_{i,j}$
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Brief history
+========================================================
+title: true
+incremental: true
+
+- Paired t-test, early 1900s
+- 1940s and 1950s for repeated measure ANOVAs
+- LMERs and GLMERs, 1990s and 2000s
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Schools example
+========================================================
+title: true
+
+![Example of school hierarchy](./images/Schools.jpeg)
+```{r schoolsExample, echo = FALSE, eval = FALSE}
+## I cannot figure out how to get diagrammer to work with Rpres so 
+## I manually save the figure pdf and then include in manually.
+library(DiagrammeR)
+library(tidyverse)
+library(DiagrammeRsvg)
+library(rsvg)
+
+graph <- grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  A[label = District, shape = box, fontname = Helvetica]
+  B1[label = School_A, shape = box, fontname = Helvetica]
+  B2[label = School_B, shape = box, fontname = Helvetica]
+  B3[label = School_C, shape = box, fontname = Helvetica]
+  C1[label = Classroom_1, shape = box, fontname = Helvetica]
+  C2[label = Classroom_2, shape = box, fontname = Helvetica]
+  C3[label = Classroom_3, shape = box, fontname = Helvetica]
+  D1[label = Student_1, shape = box, fontname = Helvetica]
+  D2[label = Student_2, shape = box, fontname = Helvetica]
+  D3[label = Student_3, shape = box, fontname = Helvetica]
+  # several 'edge' statements
+
+  A -> B1
+  A -> B2
+  A -> B3
+  B2 -> C1
+  B2 -> C2
+  B2 -> C3
+  C2 -> D1
+  C2 -> D2
+  C2 -> D3
+#  C->A[dir = both]
+}
+")
+print(graph)
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Terminology 
+========================================================
+title: true
+
+Multiple definitions (see Gelman's blog [post](https://statmodeling.stat.columbia.edu/2005/01/25/why_i_dont_use/))
+
+- Hierarchical models, nested models, multi-level models
+- Regression framework: 
+  - "Pool" information
+  - "Random-effect" vs. "fixed-effect" in "mixed-effect"
+  - Linear mixed-effect regression (`lmer()`)
+- Repeated sampling
+  - Repeated-measure
+  - Paired-test
+ 
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Simple eample for intercepts
+========================================================
+title: true
+
+```{r sim_data, echo = FALSE}
+library(tidyverse)
+set.seed(12344)
+fishes_3 <- 
+  tibble(length = c(rnorm(4, 10), rnorm(4, 5), c(rnorm(3, 13),25)),
+                 fish = rep(c("red", "blue", "green"), each = 4))
+```
+
+```{r three_fish, echo = FALSE, out.width = "600px", out.height = "400px", }
+ggplot(fishes_3, aes(x = fish, y = length, color = fish)) + geom_point() +
+  stat_summary(size = 1, color = 'black', alpha = 0.5) +
+  scale_colour_manual(values = c("blue", "green", "red"))
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Fixed vs random-effect model
+========================================================
+title: true
+
+
+```{r three_fish_model, echo = FALSE}
+library(lme4)
+three_lmer_out <- lmer( length ~ 1 + (1|fish) , data = fishes_3)
+fishes_3 <- fishes_3 %>% mutate(lmer_out = predict(three_lmer_out, fishes_3))
+```
+
+```{r three_plot, out.width = "600px", out.height = "400px", echo = FALSE}
+ggplot(fishes_3, aes(x = fish, y = length, color = fish)) + geom_point() +
+  stat_summary(size = 1, color = 'black', alpha = 0.5) +
+  scale_colour_manual(values = c("blue", "green", "red")) +
+  geom_point(aes(y = lmer_out), color = "gold", size = 4)
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Fixed vs random-effect model
+========================================================
+title: true
+
+
+```{r three_plot_no_data, out.width = "600px", out.height = "400px", echo = FALSE}
+ggplot(fishes_3, aes(x = fish, y = length, color = fish)) + 
+  stat_summary(size = 1, color = 'black', alpha = 0.5) +
+  scale_colour_manual(values = c("blue", "green", "red")) +
+  geom_point(aes(y = lmer_out), color = "gold", size = 4)
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+
+Applies to all coefficients
+========================================================
+title: true
+incremental: true
+
+- Random-effect intercept estiamtes
+- Random-effect slope estimates 
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+
+Packages in R
+========================================================
+title: true
+
+- Over a dozen R packages (see [here](http://glmm.wikidot.com/software) and [here](https://www.seascapemodels.org/rstats/2017/04/14/glmm-comparison.html))
+- `lme4`
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Example dataset--Sleep study
+========================================================
+title: true
+
+```{r sleepData}
+library(lme4)
+library(tidyverse)
+data("sleepstudy")
+sleepstudy %>% glimpse()
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Example dataset--Sleep study
+========================================================
+title: true
+
+```{r sleepData_plot, out.width = "1200px", out.height = "400px", echo = TRUE, results = 'hide'}
+ggplot(sleepstudy, aes(x = Days, y = Reaction)) +  geom_point() + 
+  stat_smooth(method = 'lm', se = FALSE) + facet_wrap( . ~ Subject, nrow = 1) +  theme_minimal() 
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Example dataset--Sleep study
+========================================================
+title: true
+
+```{r sleepData_plot_show, out.width = "1200px", out.height = "500px", echo = FALSE}
+ggplot(sleepstudy, aes(x = Days, y = Reaction)) +  geom_point() + 
+  stat_smooth(method = 'lm', se = FALSE) + facet_wrap( . ~ Subject, nrow = 2) +  theme_minimal() 
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+lme4 
+========================================================
+title: true
+
+- `lmer()` function
+- Similar to `lm()`
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+lmer() inputs
+========================================================
+title: true
+
+- `formula`
+- `data`
+- `REML`
+ - `TRUE`: Restricted maximum-likelihood 
+ - `FALSE`:  Maximum-likelihood
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+lmer() formula
+========================================================
+title: true
+
+- Random-intercept: `y ~ 1 + (1/group)`
+- Random-intercept: `y ~ 1 + (1/group)`
+- Random- and fixed-slope: `y ~ x + (x|group)`
+- Correlated random intercept and slope.: `y ~ x + (x|group)`
+- Uncorrelated random intercept and slope.: `y ~ x + (x||group)`
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+lmer() formula options
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+
+lmer() output
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+lmer() summary
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+lmer() fixef
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+lmer() randef
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+lmer() predict
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Understanding outputs 
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Generalized linear mixed-effect regression
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+GLMs in R
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+
+glm() inputs
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+glm() family functions 
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+glm() link functions 
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+glmer() 
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Example dataset
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Beyond simple models
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Uncertainty around "random-effects"
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Multiple levels within levels within levels
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+More than regression models
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Tools
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Example with Stan
+========================================================
+title: true
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+My contact
+========================================================
+title: true
+
+- https://www.usgs.gov/staff-profiles/richard-erickson
+- https://github.com/rerickson-usgs
+- rerickson@usgs.gov
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>

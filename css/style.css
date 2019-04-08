@@ -1,0 +1,113 @@
+/* CSS For presentation */
+
+/* change front-page color */
+.section .reveal .state-background {
+    background: white;
+    background-image: url(USGS_ID_black.png);
+    background-repeat: no-repeat;
+    background-position: 5% 5%;
+    background-size: 20%;
+}
+.section .reveal h1,
+.section .reveal p {
+    color: black;
+    position: relative;
+    top: 4%;}
+
+
+/* Specific background colour for main slides */
+.headerslide .state-background {   
+    background-color: #d7d7dd;    
+}
+
+
+
+/* Arrow colors */
+/* Left arrow */
+.reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
+  border-right-color: #02225E;
+}
+.reveal .controls div.navigate-left.enabled:hover {
+  border-right-color: #642C74;
+}
+/* Right arrow */
+.reveal .controls div.navigate-right, .reveal .controls div.navigate-right.enabled {
+  border-left-color: #02225E;
+}
+.reveal .controls div.navigate-right.enabled:hover {
+  border-left-color: #642C74;
+}
+
+/* Section headers (front page) -- style and font */
+.section .reveal h1,
+.section .reveal h2,
+.section .reveal h3,
+.section .reveal h4,
+.section .reveal h5,
+.section .reveal h6,
+.section .reveal p {
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+  color: #02225E;
+  text-decoration:none;
+  margin-top:10%;
+}
+
+
+
+/* Headers for slides */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6,
+.reveal p {
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow:none;
+  font-weight:300;
+  color: #02225E;
+  text-decoration:none;
+}
+
+
+
+/* Logo size and height -- logo */
+.reveal .footer img.logo{
+  height:auto;
+  width:15%;
+}
+
+/* Images in slides */
+.reveal section img.mainpanel {
+  height:450px;
+  display:block;
+  margin:auto;
+}
+/* Images should not be surrounded with a box. */
+.reveal section img {
+  box-shadow: none;
+  background: none;
+}
+
+/* Add a footer */
+.reveal .footer {
+  clear:both;
+  position:fixed;
+  top:90%;
+  z-index:10;
+  height:3em;
+  margin-top:-2em;
+}
+
+/*
+    padding: -10px 0;
+    background-color: white;
+    position: fixed;
+    top: 90%;
+    text-align:left;
+    width:100%;
+    color: #02225E;
+    font-size: 12px;
+    font-weight:300;
+*/
