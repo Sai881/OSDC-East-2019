@@ -1,0 +1,18 @@
+library(tidyverse)
+
+raw_data <- read_csv("./larval_density_RAW_Data.csv")
+
+## Look at data
+raw_data %>% pull(Fluor) %>% unique()
+raw_data %>% pull(Sample) %>% unique()
+raw_data %>% pull(Inhibited) %>% unique()
+
+## Remove blanks and ext control
+raw_data_2 <-
+    raw_data %>%
+    filter(!grepl("ext", Sample) & !grepl("blank", Sample))
+
+raw_data_2 %>%
+    mutate( tank = gsub("(tank\\d+)_(\\d+)", "\\1", Sample),
+           tank = gsub("(tank\\d+)_(\\d+)", "\\1", Sample))
+)
