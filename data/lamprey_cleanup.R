@@ -16,8 +16,8 @@ raw_data_2 <-
 raw_data_2 <- 
     raw_data_2 %>%
     mutate(tank  = gsub("(tank\\d+)_(\\d+)", "\\1", Sample),
-           DNA   = gsub("(tank\\d+)_(\\d+)", "\\2", Sample))
-
+           DNA   = gsub("(tank\\d+)_(\\d+)", "\\2", Sample),
+           Detect = ifelse(is.na(Copies), 0, 1))
 
 write_csv(x = raw_data_2, path = "./lamprey_lab_DNA.csv")
 
