@@ -209,10 +209,10 @@ incremental: true
 
 - Continuous (*slope*): 
   - The vector of raw data
-  - `x1` = c(`0.2943513, -1.7735343, -0.0981327, -1.4639324`)
+  - `x1 = c(1.2, 0.3, -1.0, 0.1)`
 - Discrete (*intercept*):
   - `0`s and `1`s to code for membership in a group
-  - `x2` = c(`0, 0, 0, 0`)
+  - `x2 = c(0, 1, 1, 0)`
 - "Coefficients" rather than "slopes" or "intercepts" 
 
 <span class="footer">
@@ -241,11 +241,39 @@ title: true
 incremental: true
 
 - Linear combinations of variables to explain and predict
-- Additive with intercepts
-- Multiplicative with slopes
-- Peter Delgard's [Introductory Statistics with R](https://www.springer.com/us/book/9780387790534) 
-- Frank Harell's [Regression Modeling Strategies](http://biostat.mc.vanderbilt.edu/wiki/Main/RmS)
+  - Data = coefficient 1 $\times$ predictor 1 + coefficient 2 $\times$ predictor 2 ...
+  - Key assumption of linearity
+- Highlights linear alegebra underlying data science 
 
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Slopes and intercepts
+========================================================
+title: true
+incremental: true
+
+- Additive with intercepts
+  - Code for group membership
+  - Effect of group 1: coefficient 1 $\times$ 0 (not in group 1) or 1 (in group 1)
+- Multiplicative with slopes
+  - Continuous predictor
+  - Effect of predictor: coeffiicent 1$\times$ value for observation 
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+  
+Books on topic
+========================================================
+title: true
+incremental: true
+  
+  
+- Peter Dalgaard's [Introductory Statistics with R](https://www.springer.com/us/book/9780387790534) 
+- Frank Harell's [Regression Modeling Strategies](http://biostat.mc.vanderbilt.edu/wiki/Main/RmS)
+- Chester Ismay and Albert Kim's [Modern Dive](https://moderndive.com)
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
