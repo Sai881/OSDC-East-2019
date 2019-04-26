@@ -209,10 +209,10 @@ incremental: true
 
 - Continuous (*slope*): 
   - The vector of raw data
-  - `x1` = c(`0.5502384, -0.3398863, -0.3800053, 1.1136872`)
+  - `x1` = c(`0.2943513, -1.7735343, -0.0981327, -1.4639324`)
 - Discrete (*intercept*):
   - `0`s and `1`s to code for membership in a group
-  - `x2` = c(`0, 0, 1, 1`)
+  - `x2` = c(`0, 0, 0, 0`)
 - "Coefficients" rather than "slopes" or "intercepts" 
 
 <span class="footer">
@@ -226,10 +226,10 @@ incremental: true
 
 
 - Global intercept with differences:
-  - `formula = y ~ 1 + x1` 
-  - (or shorthand `formula = y ~ x1`)
+  - `formula = y ~ 1 + x2` 
+  - (or shorthand `formula = y ~ x2`)
 - Intercept for each group:
-  - `formula = y ~ x1 - 1`
+  - `formula = y ~ x2 - 1`
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -739,7 +739,7 @@ incremental: true
 
 - Random-intercept: 
   
-    y ~ 1 + (1/group)
+    y ~ 1 + (1|group)
     
     
 - Correlated random intercept and slope: 
@@ -767,7 +767,7 @@ title: true
 
 ```r
 lamprey_lmer <- 
-  lmer(formula = Copies_2 ~ stock + (1|tank), 
+  lmer(formula = Copies_2 ~ stock + (1|Sample), 
        data = lamprey)
 ```
 
@@ -788,14 +788,14 @@ print(lamprey_lmer)
 
 ```
 Linear mixed model fit by REML ['lmerMod']
-Formula: Copies_2 ~ stock + (1 | tank)
+Formula: Copies_2 ~ stock + (1 | Sample)
    Data: lamprey
-REML criterion at convergence: 219.0561
+REML criterion at convergence: 217.4477
 Random effects:
  Groups   Name        Std.Dev.
- tank     (Intercept) 0.02272 
- Residual             0.50222 
-Number of obs: 144, groups:  tank, 9
+ Sample   (Intercept) 0.1556  
+ Residual             0.4802  
+Number of obs: 144, groups:  Sample, 36
 Fixed Effects:
 (Intercept)      stock2L     stock20L    stock200L  
      0.2576       3.3355       4.6871       5.9000  
@@ -907,17 +907,44 @@ ranef(lamprey_lmer)
 ```
 
 ```
-$tank
-     (Intercept)
-1A  0.0027312629
-1B  0.0045587478
-1C -0.0081302068
-2A -0.0021005547
-2B  0.0032970324
-2C  0.0032203205
-3A -0.0030643400
-3B  0.0005770761
-3C -0.0010893383
+$Sample
+         (Intercept)
+0L-1A   -0.015742162
+0L-1B    0.007779585
+0L-1C   -0.033588715
+0L-2A    0.019896401
+0L-2B   -0.076205009
+0L-2C   -0.017399794
+0L-3A   -0.012469836
+0L-3B    0.110969618
+0L-3C    0.016759912
+200L-1A -0.012940778
+200L-1B  0.016579635
+200L-1C  0.028812706
+200L-2A -0.046767840
+200L-2B -0.037618547
+200L-2C -0.025373925
+200L-3A  0.035782614
+200L-3B  0.026358510
+200L-3C  0.015167625
+20L-1A   0.128717239
+20L-1B   0.109645108
+20L-1C  -0.280753022
+20L-2A   0.035313520
+20L-2B   0.070336697
+20L-2C   0.023047482
+20L-3A  -0.085433403
+20L-3B   0.011312673
+20L-3C  -0.012186294
+2L-1A    0.001890295
+2L-1B    0.036117898
+2L-1C   -0.017872019
+2L-2A   -0.086830061
+2L-2B    0.166524703
+2L-2C    0.139901362
+2L-3A   -0.052233659
+2L-3B   -0.127105617
+2L-3C   -0.060392901
 ```
 
 <span class="footer">
@@ -935,12 +962,12 @@ confint(lamprey_lmer)
 
 ```
                  2.5 %    97.5 %
-.sig01      0.00000000 0.1670263
-.sigma      0.44268295 0.5589221
-(Intercept) 0.09458184 0.4207152
-stock2L     3.10496916 3.5660008
-stock20L    4.45657931 4.9176110
-stock200L   5.66947328 6.1305049
+.sig01      0.00000000 0.2530644
+.sigma      0.42261598 0.5516767
+(Intercept) 0.07661855 0.4386785
+stock2L     3.07946996 3.5915000
+stock20L    4.43108011 4.9431102
+stock200L   5.64397408 6.1560041
 ```
 
 <span class="footer">
@@ -971,7 +998,7 @@ predict(lamprey_lmer) %>% head()
 
 ```
        1        2        3        4        5        6 
-6.155537 6.160935 6.160858 6.154573 6.158215 6.156548 
+6.110870 6.120019 6.132264 6.193420 6.183996 6.172805 
 ```
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1538,41 +1565,8 @@ Examine summary
 title: true
 
 
-```
-Generalized linear mixed model fit by maximum likelihood (Laplace
-  Approximation) [glmerMod]
- Family: binomial  ( logit )
-Formula: Detect ~ factor(DNA) + Fluor + (1 | tank)
-   Data: lamprey_juv
-
-     AIC      BIC   logLik deviance df.resid 
-   101.1    116.5    -44.6     89.1       90 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.4549 -0.4221  0.3007  0.4578  2.3693 
-
-Random effects:
- Groups Name        Variance Std.Dev.
- tank   (Intercept) 0.5076   0.7125  
-Number of obs: 96, groups:  tank, 12
-
-Fixed effects:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    -1.5777     0.7622  -2.070 0.038451 *  
-factor(DNA)1    2.2944     0.9703   2.365 0.018048 *  
-factor(DNA)5    3.2566     1.0384   3.136 0.001712 ** 
-factor(DNA)25   4.0779     1.1652   3.500 0.000466 ***
-FluorHEX        0.1499     0.5482   0.274 0.784453    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr) f(DNA)1 f(DNA)5 f(DNA)2
-factr(DNA)1 -0.713                        
-factr(DNA)5 -0.677  0.564                 
-fctr(DNA)25 -0.613  0.514   0.491         
-FluorHEX    -0.379  0.024   0.029   0.030 
+```r
+summary(glmer_lamprey_juv)
 ```
 
 <span class="footer">
@@ -1908,7 +1902,7 @@ incremental: true
 - `lme4` documentation 
 - Continue to learn new software 
   - JAGS, Nimble, or Stan to build your own
-  - Other packages (list here) that are easier to use than above programs
+  - Other packages (e.g, rstanarm, brms, runjags) that are easier to use than above programs
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">

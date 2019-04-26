@@ -292,10 +292,10 @@ incremental: true
 
 
 - Global intercept with differences:
-  - `formula = y ~ 1 + x1` 
-  - (or shorthand `formula = y ~ x1`)
+  - `formula = y ~ 1 + x2` 
+  - (or shorthand `formula = y ~ x2`)
 - Intercept for each group:
-  - `formula = y ~ x1 - 1`
+  - `formula = y ~ x2 - 1`
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -796,7 +796,7 @@ incremental: true
 
 - Random-intercept: 
   
-    y ~ 1 + (1/group)
+    y ~ 1 + (1|group)
     
     
 - Correlated random intercept and slope: 
@@ -823,7 +823,7 @@ title: true
 
 ```{r lmer_lamprey}
 lamprey_lmer <- 
-  lmer(formula = Copies_2 ~ stock + (1|tank), 
+  lmer(formula = Copies_2 ~ stock + (1|Sample), 
        data = lamprey)
 ```
 
@@ -1483,7 +1483,7 @@ Examine summary
 ========================================================
 title: true
 
-```{r glmer_summary, echo =FALSE}
+```{r glmer_summary, echo =TRUE, results = 'hide'}
 summary(glmer_lamprey_juv)
 ```
 
@@ -1836,7 +1836,7 @@ incremental: true
 - `lme4` documentation 
 - Continue to learn new software 
   - JAGS, Nimble, or Stan to build your own
-  - Other packages (list here) that are easier to use than above programs
+  - Other packages (e.g, rstanarm, brms, runjags) that are easier to use than above programs
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
