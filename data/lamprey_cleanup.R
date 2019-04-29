@@ -43,4 +43,6 @@ raw_data_2 <-
     filter(Fluor == "FAM")
 raw_data_2
 
+raw_data_2 %>% filter(tank == "2A")
+
 write_csv(x = raw_data_2, path = "./lamprey_adult_lab_DNA.csv")

@@ -243,7 +243,7 @@ incremental: true
 - Linear combinations of variables to explain and predict
   - Data = coefficient 1 $\times$ predictor 1 + coefficient 2 $\times$ predictor 2 ...
   - Key assumption of linearity
-- Highlights linear alegebra underlying data science 
+- Highlights linear algebra underlying data science 
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -259,7 +259,7 @@ incremental: true
   - Effect of group 1: coefficient 1 $\times$ 0 (not in group 1) or 1 (in group 1)
 - Multiplicative with slopes
   - Continuous predictor
-  - Effect of predictor: coeffiicent 1$\times$ value for observation 
+  - Effect of predictor: coefficient 1$\times$ value for observation 
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1782,7 +1782,7 @@ Overarching goal
 title: true
 incremental: true
 
-**Goal:** Build population model to understand and compare management appraoches
+**Goal:** Build population model to understand and compare management approaches
 
 
 <span class="footer">
