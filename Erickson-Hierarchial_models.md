@@ -167,6 +167,7 @@ incremental: true
 - $y = a + b x$
 - $y = m x + b$
 - $y_i \sim \beta_0 + \beta_1 x_i + \epsilon_i, ~\epsilon_i \sim \text{N}(0,\sigma)$
+- $y \sim \beta_0 + \beta_1 x + \epsilon$
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -182,7 +183,7 @@ incremental: true
 - `lm()`
 - `forumla = `
 - `data = `
-- `lm(formula - y~ x, data = dat)`
+- `lm(formula = y~ x, data = dat)`
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -210,9 +211,12 @@ incremental: true
 - Continuous (*slope*): 
   - The vector of raw data
   - `x1 = c(1.2, 0.3, -1.0, 0.1)`
+  - e.g., slope $\times 1.2$ for observation 1
 - Discrete (*intercept*):
   - `0`s and `1`s to code for membership in a group
   - `x2 = c(0, 1, 1, 0)`
+  - e.g., intercept $\times 0 $ if non-member
+  - e.g., intercept $\times 1 $ if member
 - "Coefficients" rather than "slopes" or "intercepts" 
 
 <span class="footer">
@@ -228,8 +232,11 @@ incremental: true
 - Global intercept with differences:
   - `formula = y ~ 1 + x2` 
   - (or shorthand `formula = y ~ x2`)
+  - One reference group is "global" intercept 
+  - All other groups are relative difference
 - Intercept for each group:
   - `formula = y ~ x2 - 1`
+  - One intercept estimate for each group
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -260,6 +267,7 @@ incremental: true
 - Multiplicative with slopes
   - Continuous predictor
   - Effect of predictor: coefficient 1$\times$ value for observation 
+- Add together all slopes and intercepts to _predict_ an observation
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -412,6 +420,36 @@ fish_summary
   <chr>          <dbl>
 1 blue            4.88
 2 red             9.62
+```
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Red fish, blue lm
+========================================================
+title: true
+
+
+
+
+```r
+fish_lm <- lm(length ~ fish, data = fishes)
+print(coef(fish_lm),  digits = 3)
+```
+
+```
+(Intercept)     fishred 
+       4.88        4.74 
+```
+
+```r
+print(fish_summary[2,2] - fish_summary[1,2], digits = 3)
+```
+
+```
+  mean(length)
+1         4.74
 ```
 
 <span class="footer">
@@ -1731,6 +1769,7 @@ incremental: true
 - Non-linear structure or non-monotonic
 - Generalized Additive Mixed-effect Models (GAMMs)
 - GAMMs in R beyond this course
+- Correlated error structures, e.g., $\sigma \sim f(t)$
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
