@@ -1810,7 +1810,7 @@ incremental: true
 </span>
 
 
-Case study: Bighead and silver
+Case study: Bighead and silver carp
 ========================================================
 title: true
 
