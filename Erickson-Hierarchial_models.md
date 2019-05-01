@@ -215,8 +215,8 @@ incremental: true
 - Discrete (*intercept*):
   - `0`s and `1`s to code for membership in a group
   - `x2 = c(0, 1, 1, 0)`
-  - e.g., intercept $\times 0 $ if non-member
-  - e.g., intercept $\times 1 $ if member
+  - e.g., intercept $\times 0$ if non-member
+  - e.g., intercept $\times 1$ if member
 - "Coefficients" rather than "slopes" or "intercepts" 
 
 <span class="footer">
@@ -537,9 +537,26 @@ incremental: true
 - 1940s and 1950s for repeated measure ANOVAs
 - LMERs and GLMERs, 1990s and 2000s
 
+
+
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
+
+
+Computer power
+========================================================
+title: true
+incremental: false
+
+<img src="./images/USSMIDWAY_COMPUTER.jpg" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="800px" />
+
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
 
 Schools example
 ========================================================
@@ -581,7 +598,7 @@ title: true
 
 
 
-<img src="./images/fish_simple_1.jpg" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" width="800px" />
+<img src="./images/fish_simple_1.jpg" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="800px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -597,7 +614,7 @@ title: true
 
 
 
-<img src="./images/fish_simple_2.jpg" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" width="800px" />
+<img src="./images/fish_simple_2.jpg" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="800px" />
 
 
 <span class="footer">
@@ -611,7 +628,7 @@ title: true
 
 
 
-<img src="./images/fish_simple_3.jpg" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" width="800px" />
+<img src="./images/fish_simple_3.jpg" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="800px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -651,7 +668,7 @@ title: true
 incremental: false
 
 
-<img src="./images/sea_lamprey.jpg" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" width="800px" />
+<img src="./images/sea_lamprey.jpg" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="800px" />
 
 
 
@@ -1129,7 +1146,7 @@ data(sleepstudy)
 
 
 
-<img src="./images/sleep_1.jpg" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" width="800px" />
+<img src="./images/sleep_1.jpg" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="800px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1385,7 +1402,7 @@ ggsave("./images/sleep_2.jpg", width = 8, height = 4)
 
 Plot example 
 ========================================================
-<img src="./images/sleep_2.jpg" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="1200px" />
+<img src="./images/sleep_2.jpg" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="1200px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1571,7 +1588,7 @@ Plotting dataset
 ========================================================
 title: true
 
-<img src="./images/lamprey_juv.jpg" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" width="800px" />
+<img src="./images/lamprey_juv.jpg" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="800px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1797,7 +1814,7 @@ Case study: Bighead and silver
 ========================================================
 title: true
 
-<img src="./images/flying_carp.jpg" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" width="1200px" />
+<img src="./images/flying_carp.jpg" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="1200px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1808,7 +1825,7 @@ Integral Project Model (Merow et al. 2014)
 title: true
 incremental: false
 
-<img src="./images/IPM-overview.jpg" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="600px" />
+<img src="./images/IPM-overview.jpg" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="600px" />
 
 
 <span class="footer">
@@ -1848,7 +1865,7 @@ Integral Project Model with carp
 title: true
 incremental: false
 
-<img src="./images/FlowChart.jpg" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" width="600px" />
+<img src="./images/FlowChart.jpg" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="600px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1859,7 +1876,7 @@ Study area
 title: true
 incremental: false
 
-<img src="./images/riverPlotWithInset.jpg" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="1200px" />
+<img src="./images/riverPlotWithInset.jpg" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="1200px" />
 
 
 <span class="footer">
@@ -1903,29 +1920,53 @@ Data and curves
 ========================================================
 title: true
 
-<img src="./images/lengthWeightData_BHCP.jpg" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="800px" />
+<img src="./images/lengthWeightData_BHCP.jpg" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="800px" />
 
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
 
-von Bertalanffy curves
+Hyper-parameers
 ========================================================
 title: true
 
-<img src="./images/dataVBplotNot0.jpg" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="1200px" />
+<img src="./images/lengthWeightHyper_BHCP.jpg" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="800px" />
 
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
+
+
+Growth curves
+========================================================
+title: true
+
+<img src="./images/dataVBplotNot0.jpg" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="1200px" />
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+Growth curves, hyper parameter
+========================================================
+title: true
+
+<img src="./images/hyperPlotNot0.jpg" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" width="1000px" />
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
 
 Maturity curve
 ========================================================
 title: true
 
-<img src="./images/maturityPred.jpg" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="1200px" />
+<img src="./images/maturityPred.jpg" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="1200px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
@@ -1954,7 +1995,7 @@ Example outputs
 title: true
 
 
-<img src="./images/example_out_all.jpg" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="2000px" />
+<img src="./images/example_out_all.jpg" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="2000px" />
 
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">

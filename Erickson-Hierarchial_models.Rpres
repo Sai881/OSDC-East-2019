@@ -281,8 +281,8 @@ incremental: true
 - Discrete (*intercept*):
   - `0`s and `1`s to code for membership in a group
   - `x2 = c(0, 1, 1, 0)`
-  - e.g., intercept $\times 0 $ if non-member
-  - e.g., intercept $\times 1 $ if member
+  - e.g., intercept $\times 0$ if non-member
+  - e.g., intercept $\times 1$ if member
 - "Coefficients" rather than "slopes" or "intercepts" 
 
 <span class="footer">
@@ -526,9 +526,28 @@ incremental: true
 - 1940s and 1950s for repeated measure ANOVAs
 - LMERs and GLMERs, 1990s and 2000s
 
+
+
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
+
+
+Computer power
+========================================================
+title: true
+incremental: false
+
+```{r, out.width = "800px", echo = FALSE}
+knitr::include_graphics("./images/USSMIDWAY_COMPUTER.jpg")
+```
+
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
 
 Schools example
 ========================================================
@@ -1824,7 +1843,21 @@ knitr::include_graphics("./images/lengthWeightData_BHCP.jpg")
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
 
-von Bertalanffy curves
+Hyper-parameers
+========================================================
+title: true
+
+```{r, out.width = "800px", echo = FALSE}
+knitr::include_graphics("./images/lengthWeightHyper_BHCP.jpg")
+```
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
+
+Growth curves
 ========================================================
 title: true
 
@@ -1836,6 +1869,20 @@ knitr::include_graphics("./images/dataVBplotNot0.jpg")
 <span class="footer">
   <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
 </span>
+
+Growth curves, hyper parameter
+========================================================
+title: true
+
+```{r, out.width = "1000px", echo = FALSE}
+knitr::include_graphics("./images/hyperPlotNot0.jpg")
+```
+
+
+<span class="footer">
+  <img class="logo" src="./images/USGS_ID_black.png" style="padding-bottom:5px">
+</span>
+
 
 Maturity curve
 ========================================================
